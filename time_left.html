@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title> testing </title>
+	</head>
+	<body>
+		<h1 id="tex"> 남은 시간: 00:00:00 </h1>
+		<div id="progress", style="height: 30px; background-color: gray; width = 500px", align="left">
+			<div id="bar", style="height: 30px; background-color: green; width: 50%; text-color: white", align="center">1%</div>
+		</div>
+		<script>
+			const tex = document.getElementById("tex");
+			const elem = document.getElementById("bar");
+
+			let wid = 0;
+			let time = 4800
+			let id = setInterval(frame, 1000);
+			let t_hour = 1;
+			let t_min = 20;
+			let t_sec = 0;
+
+			function frame(){
+				if (wid >= 100){
+					id = clearInterval()
+				}
+				else{
+					t_sec -= 1;
+					if (t_sec <= 0){
+						t_min -=1;
+						t_sec = 59;
+					}
+					if (t_min <= 0){
+						t_hour -=1;
+						t_min=59;
+						
+					}
+					time -= 1
+					wid = (5400 - time)/100
+					elem.style.width = wid + "%"
+					elem.innerText = wid + "%"
+					tex.innerText = "남은시간: " + t_hour + ":" + t_min + ":" + t_sec
+				}
+			}
+			
+		</script>
+	</body>
+</html>
