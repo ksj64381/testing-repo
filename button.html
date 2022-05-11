@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>btn_test</title>
+</head>
+  <body>
+    <div id="box">
+      클릭 횟수:0
+    </div>
+    <button id="btn">
+      벝은
+    </button>
+  </body>
+  <script>
+    const elem = document.getElementById("box");
+    const btn = document.getElementById("btn");
+
+    let times = 0;
+
+    function onClick(){
+      times = times + 1;
+      elem.innerText = '클릭 횟수:' + times;
+    }
+
+    btn.addEventListener("click", onClick);
+
+  </script>
+</html>
