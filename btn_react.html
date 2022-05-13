@@ -9,24 +9,128 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
-    const elem = document.getElementById('box')
+    function Min2Hr() {
+      const [min, setMin] = React.useState(0)
+      const [flipped, setFlip] = React.useState(false)
 
-    function Container() {
-      const data = React.useState(0)
-      const [count, func] = data
+      const onChange = (event) => {
+        setMin(event.target.value)
+      }
 
-      function counter() {
-        func(count + 1)
+      const reset = () => {
+        setMin(0)
+      }
+
+      const Flip = () => {
+        setFlip((current) => !current)
+        reset()
       }
 
       return (
         <div>
-          <h2>클릭 횟수:{count}</h2>
-          <button onClick={counter}>벝흔</button>
+          <div>
+            <label htmlFor="min">분</label>
+            <input
+              id="min"
+              value={flipped ? min * 60 : min}
+              placeholder="Minutes"
+              type="number"
+              onChange={onChange}
+              disabled={flipped}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="hr">시</label>
+            <input
+              id="hr"
+              value={flipped ? min : min / 60}
+              placeholder="Hours"
+              type="number"
+              disabled={!flipped}
+              onChange={onChange}
+            />
+          </div>
+
+          <button onClick={reset}>리셋</button>
+          <button onClick={Flip}>{flipped ? '분' : '시'}에 입력</button>
         </div>
       )
     }
 
-    ReactDOM.render(<Container />, elem)
+    function Km2M() {
+      const [km, setKm] = React.useState(0)
+      const [m, setM] = React.useState(0)
+      const [mode, seletMode] = React.useState(false)
+
+      function kmChange(event) {
+        setKm(event.target.value)
+        setM(event.target.value / 1.609)
+      }
+
+      function mChange(event) {
+        setM(event.target.value)
+        setKm(event.target.value * 1.609)
+      }
+
+      function changeMode() {
+        seletMode((current) => !current)
+      }
+
+      function reset() {
+        setKm(0)
+        setM(0)
+      }
+
+      return (
+        <div>
+          <label htmlFor="kilos">킬로미터:</label>
+          <input
+            id="kilos"
+            placeholder="km"
+            value={km}
+            type="number"
+            onChange={kmChange}
+            disabled={mode}
+          />
+          <br />
+          <label htmlFor="miles">마일:</label>
+          <input
+            id="miles"
+            placeholder="m"
+            value={m}
+            type="number"
+            onChange={mChange}
+            disabled={!mode}
+          />
+          <br />
+          <button onClick={changeMode}>{mode ? '킬로' : '마일'} 밖꾸기</button>
+          <button onClick={reset}>초기화</button>
+        </div>
+      )
+    }
+
+    function App() {
+      const [index, setIndex] = React.useState('0')
+
+      function Sel(event) {
+        setIndex(event.target.value)
+      }
+
+      return (
+        <div>
+          <h1>{index === '0' ? '시간' : '거리'} 밖꾸개</h1>
+          <select onChange={Sel}>
+            <option value="0">시간</option>
+            <option value="1">거리</option>
+          </select>
+          {index === '0' ? <Min2Hr /> : null}
+          {index === '1' ? <Km2M /> : null}
+        </div>
+      )
+    }
+
+    const elem = document.getElementById('box')
+    ReactDOM.render(<App />, elem)
   </script>
 </html>
